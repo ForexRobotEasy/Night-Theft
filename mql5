@@ -1,0 +1,114 @@
+
+// Night Theft Forex Software Code
+// Developer: Forex Robot Easy Team
+// Developer's Site: forexroboteasy.com
+
+// Import necessary libraries
+#include <Trade\Trade.mqh>
+#include <Timeseries\Timeseries.mqh>
+
+// Define constants
+const int NIGHT_START_HOUR = 8;
+const int NIGHT_END_HOUR = 2;
+const int LOT_SIZE = 0.01;
+const double TAKE_PROFIT = 100.0;
+const double STOP_LOSS = 50.0;
+const int RECOVERY_MODE_MULTIPLIER = 2;
+
+// Initialize global variables
+CTrade trade;
+CTimeSeries series;
+
+// Entry point of the program
+void OnTick()
+{
+    // Check if it is night time
+    if (IsNightTime())
+    {
+        // Analyze the market using Super Smart Trend catcher algorithm
+        if (IsTrendDetected())
+        {
+            // Open a new order
+            OpenOrder();
+        }
+    }
+}
+
+// Check if it is night time
+bool IsNightTime()
+{
+    int currentHour = TimeHour(TimeCurrent());
+    return (currentHour >= NIGHT_START_HOUR || currentHour <= NIGHT_END_HOUR);
+}
+
+// Implement Super Smart Trend catcher algorithm
+bool IsTrendDetected()
+{
+    // Perform statistical analysis
+    // ...
+
+    // Implement Super Smart Trend catcher algorithm
+    // ...
+
+    return true; // Placeholder for the actual implementation
+}
+
+// Open a new order
+void OpenOrder()
+{
+    // Place a market order
+    trade.PositionOpen(Symbol(), OP_BUY, LOT_SIZE, 0, STOP_LOSS, TAKE_PROFIT, 'Night Theft');
+
+    // Check if order is opened successfully
+    if (trade.ResultRetcode() == TRADE_RETCODE_DONE)
+    {
+        // Order opened successfully
+        // ...
+
+        // Check if recovery martingale mode is enabled
+        if (IsRecoveryModeEnabled())
+        {
+            // Implement recovery martingale mode
+            // ...
+
+            // Calculate lot size based on recovery mode
+            double recoveryLotSize = LOT_SIZE * RECOVERY_MODE_MULTIPLIER;
+
+            // Place additional recovery orders
+            trade.PositionOpen(Symbol(), OP_BUY, recoveryLotSize, 0, STOP_LOSS, TAKE_PROFIT, 'Night Theft - Recovery');
+        }
+    }
+    else
+    {
+        // Order opening failed
+        // ...
+
+        // Handle the error
+        // ...
+    }
+}
+
+// Check if recovery martingale mode is enabled
+bool IsRecoveryModeEnabled()
+{
+    // Check if recovery martingale mode is enabled
+    // ...
+
+    return true; // Placeholder for the actual implementation
+}
+
+// Main program initialization
+void OnInit()
+{
+    // Initialize trade and series objects
+    trade.SetExpertMagicNumber(123456);
+    series.SetSymbol(Symbol());
+    series.SetPeriod(Period());
+}
+
+// Program termination
+void OnDeinit(const int reason)
+{
+    // Cleanup and release resources
+    // ...
+}
